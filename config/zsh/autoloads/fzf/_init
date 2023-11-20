@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export FZF_DEFAULT_OPTS="--bind 'ctrl-f:preview-page-down,ctrl-b:preview-page-up,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up'"
+
+autoload -Uz fzkill
+
+! command_exists rg || {
+  autoload -Uz fzr
+}

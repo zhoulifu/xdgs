@@ -1,0 +1,7 @@
+#compdef j
+
+local bm_file="${_BOOKMARK_FILE_:-${HOME}/.bookmarks}"
+local -a dirs=($(\awk -F ' -> ' '{print $1}' ${bm_file} | \xargs echo -n))
+_describe 'command' dirs
+
+# vim: ft=sh

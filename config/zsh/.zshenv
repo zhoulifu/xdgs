@@ -1,10 +1,16 @@
-command_exists() {
-  command -v "$@" &> /dev/null
+function {
+  local compiled=$ZDOTDIR/autoloads/all_functions.zwc
+  local _fpath=()
+  [[ -f $compiled ]] && {
+    _fpath+=$compiled
+  } || {
+    _fpath=($ZDOTDIR/autoloads $ZDOTDIR/autoloads/*(/))
+  }
+
+  fpath=($_fpath $fpath)
 }
 
-safe_source() {
-  [ -f "$@" ] && source "$@" || {
-    echo "No such file: $@"
-    true
-  }
-}
+autoload -Uz $ZDOTDIR/autoloads/[^_]*(.:t) $ZDOTDIR/autoloads/_transient/*(.:t)
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"

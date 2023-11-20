@@ -1,0 +1,31 @@
+_j_assert_dir() {
+    [ -d "${1}" ] || {
+      \echo "Directory not found: ${1}"
+      \false
+    }
+}
+
+local bm_file="${_BOOKMARK_FILE_:-${HOME}/.bookmarks}"
+[ -f "${bm_file}" ] || \install -m 600 /dev/null ${bm_file}
+
+case "$1" in
+  +*) # Add a bookmark
+    local dir=${2:-$(pwd)}
+    _j_assert_dir "${dir}" && {
+      \echo "${1:1} -> ${dir}" >> ${bm_file}
+      \sed -i "/^${1:1} ->/{h;\$!d;n;};\$G" ${bm_file}
+    }
+    ;;
+  -*) # Delete a bookmark
+    \sed -i "/^${1:1} ->/{d;q;}" ${bm_file}
+    ;;
+  "") # List all bookmarks
+    \cat ${bm_file}
+    ;;
+  *) # Jump to
+    local jump_dst=$(sed "/^${1} ->/{s/^${1} -> \(.*\)/\1/;q;};d" ${bm_file})
+    _j_assert_dir "${jump_dst}" && \cd "${jump_dst}"
+    ;;
+esac
+
+# vim: ft=sh

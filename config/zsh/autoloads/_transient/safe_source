@@ -1,0 +1,4 @@
+[ -f "$@" ] && source "$@" || {
+  echo "No such file: $@"
+  true
+}
