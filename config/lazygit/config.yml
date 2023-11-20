@@ -1,0 +1,16 @@
+gui:
+  showFileTree: false
+notARepository: 'quit'
+git:
+  paging:
+    colorArg: always
+    pager: delta --paging never
+customCommands:
+  - key: 'x'
+    command: '{{if .SelectedFile.Tracked}} git -c core.quotepath=false -c log.showSignature=false checkout HEAD -- {{else}} rm -f {{end}} {{.SelectedFile.Name | quote}}'
+    description: 'rollback file under cursor'
+    context: files
+    prompts:
+      - type: 'confirm'
+        title: 'Rollback Selected'
+        body: 'Are you sure you want to rollback {{ .SelectedFile.Name }}?'

@@ -1,0 +1,6 @@
+git/*
+!git/attributes
+!git/config
+!git/ignore
+lazygit/*
+!lazygit/config.yml
