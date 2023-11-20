@@ -1,0 +1,6 @@
+#!/bin/sh
+
+alias clean-zsh-history='sort -t ";" -k 2 $HISTFILE -u | sort -o $HISTFILE'
+alias pyhttp='python3 -m http.server'
+alias -g C='| column -t'
+alias lg='lazygit'

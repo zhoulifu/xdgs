@@ -1,0 +1,76 @@
+#!/bin/sh
+
+j() {
+    local bm_file="${_BOOKMARK_FILE_:-${HOME}/.bookmarks}"
+    [ -f "${bm_file}" ] || \install -m 600 /dev/null ${bm_file}
+
+    case "$1" in
+        # Add a bookmark
+        +*)
+            local dir=${2:-$(pwd)}
+            _j_assert_dir "${dir}" && {
+              \echo "${1:1} -> ${dir}" >> ${bm_file}
+              \sed -i '' "/^${1:1} ->/{h;\$!d;n;};\$G" ${bm_file}
+            }
+            ;;
+        # Delete a bookmark
+        -*)
+            \sed -i '' "/^${1:1} ->/{d;q;}" ${bm_file}
+            ;;
+        # List all bookmarks
+        "")
+            \cat ${bm_file}
+            ;;
+        # Jump to
+        *)
+            local jump_dst=$(sed "/^${1} ->/{s/^${1} -> \(.*\)/\1/;q;};d" ${bm_file})
+            _j_assert_dir "${jump_dst}" && \cd "${jump_dst}"
+            ;;
+    esac
+}
+
+_j_assert_dir() {
+    [ -d "${1}" ] || {
+      \echo "Directory not found: ${1}"
+      \false
+    }
+}
+
+_j_comp() {
+    local bm_file="${_BOOKMARK_FILE_:-${HOME}/.bookmarks}"
+    reply=($(\awk -F ' -> ' '{print $1}' ${bm_file} | \xargs echo -n))
+}
+
+compctl -K _j_comp j
+
+[ -n "${TMUX_PANE}" ] && ssh() {
+    local _window_name=$(tmux display-message -p '#W')
+    local _user=$(command ssh -G "$@" | sed -n 's/^user \(.*\)$/\1/p')
+    local _host=$(command ssh -G "$@" | sed -n 's/^hostname \(.*\)$/\1/p')
+    tmux renamew "${_user}@${_host}"
+    command ssh "$@"
+    tmux renamew ${_window_name}
+}
+
+command_exists fzf && {
+  fzr() {
+    rg --color=always --line-number --no-heading --smart-case "${*:-}" |
+    fzf --ansi \
+      --layout reverse-list \
+      --color "hl:-1:underline,hl+:-1:underline:reverse" \
+      --delimiter : \
+      --preview 'bat -n --color=always {1} --highlight-line {2}' \
+      --preview-window 'up,70%,border-bottom,+{2}/2' \
+      --bind 'enter:become(nvim {1} +{2})'
+  }
+
+  fzkill() {
+    (date; ps -ef) |
+    fzf -e --bind='ctrl-r:reload(date; ps -ef)' \
+      --header=$'Press CTRL-R to reload\n\n' --header-lines=2 \
+      --preview='echo {}' --preview-window=down,3,wrap \
+      --layout=reverse |
+    awk '{print $2}' |
+    xargs kill -9
+   }
+}

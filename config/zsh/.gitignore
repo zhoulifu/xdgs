@@ -1,0 +1,4 @@
+.zcompdump*
+.zsh_history
+addi_plugins.sh
+rc.d/_*
