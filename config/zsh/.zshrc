@@ -15,9 +15,15 @@ export ZSH="$ZDOTDIR/ohmyzsh"
 safe_source $ZSH/oh-my-zsh.sh
 # }}}
 
-for _rc_file in `find $ZDOTDIR/rc.d -follow -mindepth 1 -maxdepth 1 -type f ! -name '_*'`; do
-  source $_rc_file
-done
+alias clrhist='sort -t ";" -k 2 $HISTFILE -u | sort -o $HISTFILE'
+alias -g C='| column -t'
+
+function {
+  local rcs=($ZDOTDIR/rc.d/**/*(.))
+  for rc in $rcs; do
+    source $rc
+  done
+}
 
 unset -f $ZDOTDIR/autoloads/_transient/*(.:t)
 
