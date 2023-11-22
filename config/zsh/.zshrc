@@ -9,7 +9,7 @@ plugins=(
   vi-mode
   zsh-syntax-highlighting
 )
-safe_source $ZDOTDIR/addi_plugins.sh
+safe_source -s $ZDOTDIR/addi_plugins.sh
 
 export ZSH="$ZDOTDIR/ohmyzsh"
 safe_source $ZSH/oh-my-zsh.sh

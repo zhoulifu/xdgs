@@ -1,4 +1,14 @@
-[ -f "$@" ] && source "$@" || {
-  echo "No such file: $@"
-  true
+local suppress=false
+
+local OPTIND opt
+while getopts "s" opt; do
+  case $opt in
+    s)
+      suppress=true ;;
+  esac
+done
+shift $((OPTIND-1))
+
+[[ -f "$@" ]] && source "$@" || {
+  $suppress || echo "at ${functrace[1]}: No such file: $@"
 }
