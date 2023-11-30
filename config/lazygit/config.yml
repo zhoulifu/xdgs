@@ -7,8 +7,8 @@ git:
     pager: delta --paging never
 customCommands:
   - key: 'x'
-    command: '{{if .SelectedFile.Tracked}} git -c core.quotepath=false -c log.showSignature=false checkout HEAD -- {{else}} rm -f {{end}} {{.SelectedFile.Name | quote}}'
-    description: 'rollback file under cursor'
+    command: '{{if .SelectedFile.Tracked}} git restore {{else}} rm -f {{end}} {{.SelectedFile.Name | quote}}'
+    description: 'discard unstaged changes of selected file'
     context: files
     prompts:
       - type: 'confirm'
