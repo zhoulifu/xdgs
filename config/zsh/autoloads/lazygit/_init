@@ -1,0 +1,9 @@
+#!/bin/sh
+
+alias lg='lazygit'
+
+function {
+  local cfg_files=($XDG_CONFIG_HOME/lazygit/config.yml)
+  [[ -f "$XDG_CONFIG_HOME/lazygit/config.local.yml" ]] && cfg_files+="$XDG_CONFIG_HOME/lazygit/config.local.yml"
+  export LG_CONFIG_FILE=$(IFS=,; printf '%s' "${cfg_files[*]}")
+}
