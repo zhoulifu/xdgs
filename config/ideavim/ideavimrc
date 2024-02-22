@@ -1,0 +1,44 @@
+let mapleader=" "
+
+" plugins {{{1
+set argtextobj
+set textobj-entire
+set highlightedyank
+let g:argtextobj_pairs="[:],(:),<:>"
+" }}}
+
+" Intellij specific {{{1
+set ideastatusicon=gray
+set ideajoin
+set idearefactormode=keep
+set ideawrite=file
+" }}}
+
+" search {{{1
+set incsearch
+set hlsearch
+set smartcase
+set ignorecase
+" }}}
+
+set clipboard=ideaput,unnamedplus
+set number
+set relativenumber
+"set selectmode=mouse,cmd
+
+map <leader>R :source ~/.config/ideavim/ideavimrc<cr>
+map gr <action>(FindUsages)
+map gI <action>(GotoImplementation)
+map gU <action>(GotoSuperMethod)
+map <leader><space> <action>(GotoFile)
+map <leader>/ <action>(FindInPath)
+map <leader>sc <action>(GotoClass)
+map <leader>sd <action>(GotoSymbol)
+map <leader>sD <action>(FileStructurePopup)
+map <leader>cf <action>(ReformatCode)
+map <leader>ca <action>(ShowIntentionActions)
+map <leader>fh <action>(Vcs.ShowTabbedFileHistory)
+map <c-o> <action>(Back)
+map <c-i> <action>(Forward)
+
+" vim: ft=vim foldmethod=marker
