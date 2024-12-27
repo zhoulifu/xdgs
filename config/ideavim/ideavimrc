@@ -1,9 +1,12 @@
 let mapleader=" "
 
 " plugins {{{1
-set argtextobj
+set exchange
 set textobj-entire
 set highlightedyank
+"set quickscope
+"let g:qs_disable_for_diffs=1
+set argtextobj
 let g:argtextobj_pairs="[:],(:),<:>"
 " }}}
 
@@ -29,7 +32,7 @@ set relativenumber
 map <leader>R :source ~/.config/ideavim/ideavimrc<cr>
 map gr <action>(FindUsages)
 map gI <action>(GotoImplementation)
-map gU <action>(GotoSuperMethod)
+map <leader>gU <action>(GotoSuperMethod)
 map <leader><space> <action>(GotoFile)
 map <leader>/ <action>(FindInPath)
 map <leader>sc <action>(GotoClass)
