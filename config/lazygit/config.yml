@@ -5,6 +5,7 @@ git:
   paging:
     colorArg: always
     pager: delta --paging never
+  autoFetch: false
 customCommands:
   - key: 'x'
     command: '{{if .SelectedFile.Tracked}} git restore {{else}} rm -f {{end}} {{.SelectedFile.Name | quote}}'
