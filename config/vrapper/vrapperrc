@@ -1,0 +1,8 @@
+set clipboard=unnamedplus
+set list
+set number
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+set cursorline
