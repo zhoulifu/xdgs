@@ -1,3 +1,8 @@
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+[[ -z $ZDOTDIR ]] && export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
 function {
   local compiled=$ZDOTDIR/autoloads/all_functions.zwc
   local _fpath=()
@@ -11,6 +16,3 @@ function {
 }
 
 autoload -Uz $ZDOTDIR/autoloads/[^_]*(.:t) $ZDOTDIR/autoloads/_transient/*(.:t)
-
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"

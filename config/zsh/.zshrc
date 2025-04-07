@@ -25,6 +25,13 @@ function {
   done
 }
 
+function {
+  local dirs=($ZDOTDIR/autoloads/[^_]*(/:t))
+  for _init in $dirs; do
+    ! command_exists $_init || safe_source $ZDOTDIR/autoloads/$_init/_init
+  done
+}
+
 unset -f $ZDOTDIR/autoloads/_transient/*(.:t)
 
 # vim: foldmethod=marker
