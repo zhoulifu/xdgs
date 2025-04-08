@@ -12,7 +12,6 @@ plugins=(
 safe_source -s $ZDOTDIR/addi_plugins.sh
 
 export ZSH="$ZDOTDIR/ohmyzsh"
-safe_source $ZSH/oh-my-zsh.sh
 # }}}
 
 alias clrhist='sort -t ";" -k 2 $HISTFILE -u | sort -o $HISTFILE'
@@ -31,6 +30,8 @@ function {
     ! command_exists $_init || safe_source $ZDOTDIR/autoloads/$_init/_init
   done
 }
+
+safe_source $ZSH/oh-my-zsh.sh
 
 unset -f $ZDOTDIR/autoloads/_transient/*(.:t)
 

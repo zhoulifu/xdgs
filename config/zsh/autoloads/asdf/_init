@@ -1,0 +1,3 @@
+plugins+=(asdf)
+
+# vim: ft=sh
