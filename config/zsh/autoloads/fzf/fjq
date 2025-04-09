@@ -1,0 +1,18 @@
+if (( $+commands[bat] )); then
+  _preview_cmd="jq {q} $1 | bat -l json -n --color=always"
+else
+  _preview_cmd="jq {q} $1"
+fi
+
+fzf --ansi --disabled --query '.' --print-query \
+  --bind "start:reload:true" \
+  --prompt 'jq filter> ' --info hidden \
+  --layout reverse \
+  --preview-window down,95%,wrap,noinfo \
+  --preview $_preview_cmd \
+  --header 'C-y: copy output | C-f: copy filter | Ret: output | Esc: exit' \
+  --bind "ctrl-y:execute-silent(jq -r {q} $1 | pbcopy)" \
+  --bind "ctrl-f:execute-silent(echo {q} | pbcopy)" \
+  --bind "enter:become(jq -r {q} $1)"
+
+# vim: ft=zsh

@@ -8,4 +8,8 @@ autoload -Uz fzkill
   autoload -Uz fzr
 }
 
+! command_exists jq || {
+  autoload -Uz fjq
+}
+
 # vim: ft=sh
