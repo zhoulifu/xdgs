@@ -2,10 +2,10 @@ plugins+=(fzf)
 
 export FZF_DEFAULT_OPTS="--bind 'ctrl-f:preview-page-down,ctrl-b:preview-page-up,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up'"
 
-autoload -Uz fzkill
+autoload -Uz fkill
 
 ! command_exists rg || {
-  autoload -Uz fzr
+  autoload -Uz frg
 }
 
 ! command_exists jq || {
