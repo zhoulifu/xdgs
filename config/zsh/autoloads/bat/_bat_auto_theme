@@ -1,0 +1,10 @@
+case "$(uname -s)" in
+  Darwin)
+    echo "auto:system"
+    ;;
+  *)
+    # TODO
+    ;;
+esac
+
+# vim: ft=sh

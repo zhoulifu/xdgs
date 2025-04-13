@@ -1,7 +1,14 @@
 export TEMP=$(mktemp -u)
 trap 'rm -f "$TEMP"' EXIT
 
-TRANSFORMER='
+local _preview_cmd
+if (( $+commands[bat] )); then
+  _preview_cmd="bat --theme $(_bat_auto_theme) --color=always {1} --highlight-line {2}"
+else
+  _preview_cmd="cat {1}"
+fi
+
+local transformer='
   rg_pat={q:1}      # The first word is passed to ripgrep
   fzf_pat={q:2..}   # The rest are passed to fzf
 
@@ -13,11 +20,11 @@ TRANSFORMER='
 '
 fzf --ansi --disabled --query "${*:-}" \
   --with-shell 'bash -c' \
-  --bind "start,change:transform:$TRANSFORMER" \
+  --bind "start,change:transform:$transformer" \
   --color "hl:-1:underline,hl+:-1:underline:reverse" \
   --delimiter : \
-  --preview 'bat --color=always {1} --highlight-line {2}' \
+  --preview $_preview_cmd \
   --preview-window 'up,60%,border-line,+{2}+3/3,~3' \
   --bind 'enter:become($EDITOR {1} +{2})'
 
-# vim: ft=sh
+# vim: ft=zsh

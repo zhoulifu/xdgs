@@ -1,5 +1,6 @@
+local _preview_cmd
 if (( $+commands[bat] )); then
-  _preview_cmd="jq {q} $1 | bat -l json -n --color=always"
+  _preview_cmd="jq {q} $1 | bat --theme $(_bat_auto_theme) -l json -n --color=always"
 else
   _preview_cmd="jq {q} $1"
 fi
