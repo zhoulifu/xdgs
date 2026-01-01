@@ -1,4 +1,5 @@
 .zcompdump*
 .zsh_history
+.zsh_sessions
 addi_plugins.sh
 rc.d/*
