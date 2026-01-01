@@ -1,9 +1,5 @@
 export GNUPGHOME=$XDG_CONFIG_HOME/gnupg
-export GPG_TTY=$(tty)
 
-# use gpg-agent for ssh authentication
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-
-gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+plugins+=(gpg-agent)
 
 # vim: ft=sh foldmethod=marker
